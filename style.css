@@ -188,13 +188,12 @@ table { font-variant-numeric: tabular-nums; }
   letter-spacing: -0.01em;
   line-height: 1.15;
   margin-bottom: 1.5rem;
-  max-width: 30ch;
+  max-width: min(100%, 38ch);
 }
-.section-title-lg { font-size: clamp(2.4rem, 5vw, 3.75rem); max-width: 22ch; }
+.section-title-lg { font-size: clamp(2.4rem, 5vw, 3.75rem); max-width: min(100%, 26ch); }
 .section-lede {
   font-size: 1.1rem;
   color: var(--body-text);
-  max-width: 68ch;
   margin-bottom: 2.5rem;
 }
 .subhead {
@@ -208,7 +207,7 @@ table { font-variant-numeric: tabular-nums; }
   letter-spacing: -0.01em;
   line-height: 1.2;
   margin: 0 0 1.25rem;
-  max-width: 30ch;
+  max-width: min(100%, 38ch);
 }
 
 .section-divider {
@@ -217,11 +216,16 @@ table { font-variant-numeric: tabular-nums; }
   background: linear-gradient(90deg, rgba(255,115,0,0.5), rgba(136,139,141,0.15) 40%, transparent 80%);
 }
 
-.about-text p { max-width: 68ch; color: var(--body-text); }
+.about-text { max-width: 100%; }
+.about-text p, .about-text li { color: var(--body-text); }
+.about-text p { max-width: none; }
 .about-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem 3rem;
   align-items: start;
 }
+/* A lone block in the grid has no partner to sit beside, so it takes the
+   whole row rather than leaving the right half empty. */
+.about-grid > .about-text:only-child { grid-column: 1 / -1; }
 @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; } }
 
 blockquote {
