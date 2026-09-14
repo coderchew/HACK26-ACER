@@ -249,10 +249,11 @@ blockquote {
    HERO
    ============================================================ */
 .hero {
+  min-height: 100vh;
   min-height: 100svh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  display: flex; flex-direction: column; align-items: center;
   text-align: center; position: relative;
-  padding: calc(var(--nav-h) + 2rem) 1.25rem 3rem;
+  padding: calc(var(--nav-h) + clamp(0.5rem, 2.5vh, 2rem)) 1.25rem clamp(0.75rem, 2vh, 2rem);
   overflow: hidden;
 }
 .hero-glow {
@@ -263,12 +264,15 @@ blockquote {
   z-index: -1;
 }
 .hero-inner {
-  display: flex; flex-direction: column; align-items: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex: 1 1 auto;
   max-width: 780px;
+  width: 100%;
 }
+/* Vertical sizes also track viewport height so the whole hero, scroll cue included, fits on short laptop screens. */
 .hero-logo {
-  width: min(220px, 42vw); height: auto;
-  margin-bottom: 1.75rem;
+  width: min(220px, 42vw, 20vh); height: auto;
+  margin-bottom: clamp(0.75rem, 2.5vh, 1.75rem);
   filter: drop-shadow(0 0 40px rgba(255,115,0,0.25));
   animation: hero-float 7s ease-in-out infinite;
 }
@@ -277,18 +281,18 @@ blockquote {
   50% { transform: translateY(-10px); }
 }
 .hero-word {
-  font-size: clamp(3rem, 9vw, 7rem);
+  font-size: clamp(3rem, min(9vw, 11vh), 7rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1;
   background: linear-gradient(135deg, #FFFFFF 30%, var(--orange) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 3vh, 2rem);
   text-shadow: none;
 }
 
 /* Countdown */
-.countdown { display: flex; flex-direction: column; align-items: center; margin-bottom: 2.5rem; }
+.countdown { display: flex; flex-direction: column; align-items: center; margin-bottom: clamp(1.25rem, 3.5vh, 2.5rem); }
 .countdown-grid[hidden] { display: none; }
 .countdown-grid {
   display: flex; align-items: center; gap: 0.6rem;
@@ -296,7 +300,7 @@ blockquote {
 }
 .cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 4.2rem; }
 .cd-num {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(2rem, min(5vw, 5.5vh), 3.2rem);
   font-weight: 800; color: var(--white);
   background: rgba(136,139,141,0.08);
   border: 1px solid rgba(136,139,141,0.25);
@@ -316,7 +320,7 @@ blockquote {
   margin-top: 0.5rem; font-size: 0.7rem; text-transform: uppercase;
   letter-spacing: 0.15em; color: var(--grey); font-weight: 700;
 }
-.cd-sep { font-size: clamp(1.5rem, 4vw, 2.4rem); color: var(--orange); font-weight: 800; padding-bottom: 1.6rem; }
+.cd-sep { font-size: clamp(1.5rem, min(4vw, 4.4vh), 2.4rem); color: var(--orange); font-weight: 800; padding-bottom: 1.6rem; }
 .countdown-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--grey); }
 
 .countdown-live[hidden] { display: none; }
@@ -354,8 +358,19 @@ blockquote {
 .cta-btn:hover svg { transform: translateY(3px); }
 
 .scroll-cue {
-  position: absolute; bottom: 2rem; left: 50%; translate: -50% 0;
+  flex: 0 0 auto;
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+}
+@media (max-height: 720px) {
+  .hero-logo { width: min(220px, 42vw, 17vh); }
+  .hero .eyebrow { margin-bottom: 0.5rem; }
+  .countdown-caption { margin-top: 0.5rem; }
+  .cd-label { margin-top: 0.35rem; }
+}
+/* Too short to fit the hero above the fold; a cue that only appears after scrolling is noise. */
+@media (max-height: 620px) {
+  .scroll-cue { display: none; }
 }
 .scroll-cue span {
   width: 22px; height: 36px; border: 2px solid var(--grey); border-radius: 12px;
